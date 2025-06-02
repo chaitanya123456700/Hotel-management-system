@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <meta http-equiv="X-UA-Compatible" content="IE=edge">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Hotel Website - Book Now</title> {# Updated title #}
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" />
+   <link rel="stylesheet" href="{{ url_for('static', filename='booking.css') }}"> {# Updated static path #}
+   <link rel="stylesheet" href="{{ url_for('static', filename='mainstyle.css') }}"> {# Added mainstyle for header #}
+</head>
+<body>
+
+    <header class="header"> {# Added header for consistent navigation #}
+
+        <a href="{{ url_for('index') }}" class="logo"> <i class="fas fa-hotel"></i> RR </a>
+
+        <nav class="navbar">
+            <a href="{{ url_for('index') }}#home">Home</a>
+            <a href="{{ url_for('index') }}#about">About</a>
+            <a href="{{ url_for('index') }}#room">Room</a>
+            <a href="{{ url_for('restaurant') }}">Restaurant</a>
+            <a href="{{ url_for('index') }}#gallery">Gallery</a>
+            <a href="{{ url_for('index') }}#review">Review</a>
+            <a href="{{ url_for('index') }}#faq">FAQ</a>
+            <a href="{{ url_for('booking') }}">Book now</a>
+            <a href="{{ url_for('sign_in_and_up') }}" class="btn">Log In</a>
+        </nav>
+
+        <div id="menu-btn" class="fas fa-bars"></div>
+
+    </header>
+
+   <section class="reservation" id="reservation">
+
+      <h1 class="heading">Book Now</h1>
+
+      <form method="POST" action="/check_availability"> {# Changed action to a new Flask route #}
+          {% with messages = get_flashed_messages(with_categories=true) %}
+              {% if messages %}
+                  {% for category, message in messages %}
+                      <div class="flash {{ category }}">{{ message }}</div>
+                  {% endfor %}
+              {% endif %}
+          {% endwith %}
+
+          <div class="container">
+
+              <div class="box">
+                 <p>Name <span>*</span></p>
+                 <input type="text" class="input" placeholder="Your Name" id="name" name="name"> {# Added name #}
+              </div>
+
+              <div class="box">
+                 <p>Email <span>*</span></p>
+                 <input type="email" class="input" placeholder="Your Email" id="email" name="email"> {# Added name #}
+              </div>
+
+              <div class="box">
+                 <p>Check In <span>*</span></p>
+                 <input type="date" class="input" id="date3" name="check_in_date"> {# Added name #}
+              </div>
+
+              <div class="box">
+                 <p>Check Out <span>*</span></p>
+                 <input type="date" class="input" id="date4" name="check_out_date"> {# Added name #}
+              </div>
+
+              <div class="box">
+                 <p>Adults <span>*</span></p>
+                 <select name="adults" class="input">
+                    <option value="1">1 Adults</option>
+                    <option value="2">2 Adults</option>
+                    <option value="3">3 Adults</option>
+                    <option value="4">4 Adults</option>
+                    <option value="5">5 Adults</option>
+                    <option value="6">6 Adults</option>
+                 </select>
+              </div>
+
+              <div class="box">
+                 <p>Children <span>*</span></p>
+                 <select name="children" class="input"> {# Changed name to 'children' for consistency #}
+                    <option value="0">0 Child</option>
+                    <option value="1">1 Child</option>
+                    <option value="2">2 Child</option>
+                    <option value="3">3 Child</option>
+                    <option value="4">4 Child</option>
+                    <option value="5">5 Child</option>
+                    <option value="6">6 Child</option>
+                 </select>
+              </div>
+
+              <div class="box">
+                 <p>Rooms <span>*</span></p>
+                 <select name="rooms" class="input">
+                    <option value="1">1 Rooms</option>
+                    <option value="2">2 Rooms</option>
+                    <option value="3">3 Rooms</option>
+                    <option value="4">4 Rooms</option>
+                    <option value="5">5 Rooms</option>
+                    <option value="6">6 Rooms</option>
+                 </select>
+              </div>
+
+              <div class="box">
+                 <p>Room Type <span>*</span></p>
+                 <select name="room_type" class="input"> {# Changed name to 'room_type' #}
+                    <option value="Presidential Suite">Presidential Suite</option> {# Adjusted values to match your main page rooms #}
+                    <option value="Family Room">Family Room</option>
+                    <option value="Standard Room">Standard Room</option>
+                    <option value="Deluxe Room">Deluxe Room</option>
+                    <option value="Suite">Suite</option>
+                    <option value="Executive Room">Executive Room</option>
+                 </select>
+              </div>
+         
+          </div>
+
+          <input type="submit" value="Book Now" class="btn"> {# Changed text from "Check Availability" to "Book Now" #}
+
+      </form>
+
+   </section>
+
+   <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
+
+   <script src="{{ url_for('static', filename='js/mainscript.js') }}"></script> {# Updated static path #}
+
+</body>
+</html>

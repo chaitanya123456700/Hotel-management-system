@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login / Sign Up - The Grand Hotel</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(to right, #6a11cb 0%, #2575fc 100%); /* Modern gradient background */
+            color: #333;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            margin: 0;
+            overflow-x: hidden; /* Prevent horizontal scroll */
+        }
+
+        /* Header remains similar, but adapted to new color scheme */
+        header {
+            background-color: rgba(0, 0, 0, 0.4); /* Semi-transparent dark header */
+            color: #fff;
+            padding: 1rem 0;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        header .container {
+            max-width: 1280px; /* Slightly wider header */
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        header h1 {
+            font-size: 1.8rem; /* Larger header title */
+            font-weight: 700;
+            margin: 0;
+            color: #fff;
+        }
+
+        header nav ul {
+            display: flex;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            gap: 1.8rem; /* More space between nav items */
+        }
+
+        header nav a {
+            color: #e0e7ff; /* Lighter white for nav links */
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease, transform 0.2s ease;
+            position: relative;
+        }
+
+        header nav a:hover {
+            color: #fff;
+            transform: translateY(-2px);
+        }
+
+        /* Underline effect on hover */
+        header nav a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background-color: #fff;
+            transition: width 0.3s ease-in-out;
+        }
+
+        header nav a:hover::after {
+            width: 100%;
+        }
+
+
+        /* Main content area for centering the form */
+        main {
+            flex-grow: 1;
+            display: flex;
+            align-items: center; /* Vertically center */
+            justify-content: center; /* Horizontally center */
+            padding: 2rem; /* Consistent padding */
+            position: relative; /* For potential background elements */
+            z-index: 1;
+        }
+
+        /* Form Card Container */
+        .auth-card {
+            background-color: rgba(255, 255, 255, 0.95); /* Slightly transparent white card */
+            border-radius: 20px; /* More prominent rounding */
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2); /* Stronger, softer shadow */
+            padding: 50px; /* Generous padding inside */
+            max-width: 450px; /* Wider card for a more spacious feel */
+            width: 100%;
+            text-align: left;
+            position: relative; /* For ripple effect or other animations */
+            overflow: hidden; /* Hide overflow for rounded corners/shadow */
+            backdrop-filter: blur(5px); /* Subtle blur effect for the card */
+            -webkit-backdrop-filter: blur(5px);
+        }
+
+        /* Titles */
+        .auth-card h1 {
+            font-size: 2.5rem; /* Large, bold title */
+            font-weight: 700;
+            color: #1a202c; /* Dark text */
+            margin-bottom: 10px;
+            text-align: center; /* Center the titles */
+        }
+
+        .auth-card .subtitle {
+            font-size: 1.1rem;
+            color: #4a5568; /* Slightly lighter subtitle */
+            margin-bottom: 35px; /* More space after subtitle */
+            text-align: center; /* Center the subtitles */
+        }
+
+        /* Form Group Styles */
+        .form-group {
+            margin-bottom: 25px; /* Increased space between groups */
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 10px; /* More space below label */
+            font-weight: 600; /* Semibold label */
+            color: #2d3748; /* Darker gray for labels */
+            font-size: 0.9rem;
+            letter-spacing: 0.02em; /* Slightly spaced letters */
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 14px 20px; /* Larger padding for inputs */
+            border: 1px solid #cbd5e0; /* Subtle border */
+            border-radius: 10px; /* More rounded inputs */
+            font-size: 1rem;
+            color: #2d3748;
+            background-color: #edf2f7; /* Light gray background */
+            box-sizing: border-box;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus {
+            border-color: #4c51bf; /* Deeper blue on focus */
+            box-shadow: 0 0 0 4px rgba(76, 81, 191, 0.2); /* Soft, prominent shadow on focus */
+            background-color: #fff; /* White background on focus */
+        }
+
+        /* Button Styling */
+        .btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(to right, #6a11cb 0%, #2575fc 100%); /* Gradient button */
+            color: #fff;
+            padding: 15px 30px; /* Generous padding */
+            border-radius: 12px; /* Nicely rounded */
+            font-size: 1.15rem; /* Larger font */
+            font-weight: 600;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+            box-sizing: border-box;
+            margin-top: 30px; /* More space above button */
+            transition: all 0.3s ease;
+            letter-spacing: 0.05em; /* Slightly spaced letters */
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn:hover {
+            background: linear-gradient(to right, #5c0fac 0%, #1c5fd6 100%); /* Darker gradient on hover */
+            transform: translateY(-3px); /* More pronounced lift */
+            box-shadow: 0 12px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn::after {
+            content: '\2192'; /* Right arrow unicode */
+            margin-left: 10px;
+            font-size: 1.2em;
+            line-height: 1;
+        }
+
+        /* Switch Form Link */
+        .switch-form {
+            margin-top: 30px; /* More space below form */
+            font-size: 1rem;
+            color: #718096;
+            text-align: center;
+        }
+
+        .switch-form a {
+            color: #4c51bf; /* Deeper blue for link */
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+
+        .switch-form a:hover {
+            color: #3b82f6; /* Lighter blue on hover */
+            text-decoration: underline;
+        }
+
+        /* Flash Messages - updated colors for new scheme */
+        .flash-message {
+            padding: 1rem 1.5rem;
+            margin-bottom: 1.5rem;
+            border-radius: 10px; /* More rounded */
+            font-weight: 500; /* Medium weight */
+            text-align: center; /* Center flash messages */
+            opacity: 0.9;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        .flash-success {
+            background-color: #d4edda; /* Light green */
+            color: #155724; /* Dark green */
+            border: 1px solid #c3e6cb;
+        }
+        .flash-error {
+            background-color: #f8d7da; /* Light red */
+            color: #721c24; /* Dark red */
+            border: 1px solid #f5c6cb;
+        }
+        .flash-info {
+            background-color: #d1ecf1; /* Light blue */
+            color: #0c5460; /* Dark blue */
+            border: 1px solid #bee5eb;
+        }
+
+        /* Footer styles - adapted for new color scheme */
+        footer {
+            background-color: rgba(0, 0, 0, 0.4); /* Semi-transparent dark footer */
+            color: #e0e7ff; /* Light white text */
+            padding: 1rem;
+            text-align: center;
+            font-size: 0.875rem;
+            box-shadow: 0 -4px 8px rgba(0, 0, 0, 0.2);
+            z-index: 10; /* Ensure footer is above main content if needed */
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>The Grand Hotel</h1>
+            <nav>
+                <ul>
+                    <li><a href="{{ url_for('index') }}">Home</a></li>
+                    <li><a href="{{ url_for('booking') }}">Book a Room</a></li>
+                    <li><a href="{{ url_for('restaurant') }}">Restaurant</a></li>
+                    <li><a href="{{ url_for('order_page') }}">Order Food</a></li>
+                    <li><a href="{{ url_for('view_bookings') }}">View Bookings</a></li>
+                    <li><a href="{{ url_for('view_orders') }}">View Food Orders</a></li>
+                    {% if session.logged_in %}
+                        <li><span>Hello, {{ session.username }}!</span></li>
+                        <li><a href="{{ url_for('logout') }}">Logout</a></li>
+                    {% else %}
+                        <li><a href="{{ url_for('sign_in_and_up') }}">Sign In/Up</a></li>
+                    {% endif %}
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <div class="auth-card">
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    <div class="mb-4">
+                        {% for category, message in messages %}
+                            <div class="flash-message flash-{{ category }}">{{ message }}</div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            {% endwith %}
+
+            <h1 id="loginTitle">Welcome Back!</h1>
+            <p class="subtitle" id="loginSubtitle">Login to your account</p>
+            <form action="{{ url_for('login_details') }}" method="POST" id="loginForm">
+                <div class="form-group">
+                    <label for="username">Username or Email</label>
+                    <input type="text" id="username" name="username" required autocomplete="username">
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" required autocomplete="current-password">
+                </div>
+                <button type="submit" class="btn">Login</button>
+            </form>
+            <div class="switch-form" id="loginSwitch">
+                Don't have an account? <a href="#" id="showSignup">Create One</a>
+            </div>
+
+            <h1 style="display: none;" id="signupTitle">Join Us Today!</h1>
+            <p class="subtitle" style="display: none;" id="signupSubtitle">Create your new account</p>
+            <form action="{{ url_for('register_details') }}" method="POST" style="display: none;" id="signupForm">
+                <div class="form-group">
+                    <label for="newUsername">Username</label>
+                    <input type="text" id="newUsername" name="newUsername" required autocomplete="new-username">
+                </div>
+                <div class="form-group">
+                    <label for="newEmail">Email Address</label>
+                    <input type="email" id="newEmail" name="newEmail" required autocomplete="email">
+                </div>
+                <div class="form-group">
+                    <label for="newPassword">Password</label>
+                    <input type="password" id="newPassword" name="newPassword" required autocomplete="new-password">
+                </div>
+                <button type="submit" class="btn">Sign Up</button>
+            </form>
+            <div class="switch-form" style="display: none;" id="signupSwitch">
+                Already have an account? <a href="#" id="showLogin">Login Here</a>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; {{ datetime.now().year }} The Grand Hotel. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Simple client-side toggle for login/signup forms
+        document.getElementById('showSignup').addEventListener('click', function(e) {
+            e.preventDefault();
+            document.getElementById('loginTitle').style.display = 'none';
+            document.getElementById('loginSubtitle').style.display = 'none';
+            document.getElementById('loginForm').style.display = 'none';
+            document.getElementById('loginSwitch').style.display = 'none';
+
+            document.getElementById('signupTitle').style.display = 'block';
+            document.getElementById('signupSubtitle').style.display = 'block';
+            document.getElementById('signupForm').style.display = 'block';
+            document.getElementById('signupSwitch').style.display = 'block';
+        });
+
+        document.getElementById('showLogin').addEventListener('click', function(e) {
+            e.preventDefault();
+            document.getElementById('loginTitle').style.display = 'block';
+            document.getElementById('loginSubtitle').style.display = 'block';
+            document.getElementById('loginForm').style.display = 'block';
+            document.getElementById('loginSwitch').style.display = 'block';
+
+            document.getElementById('signupTitle').style.display = 'none';
+            document.getElementById('signupSubtitle').style.display = 'none';
+            document.getElementById('signupForm').style.display = 'none';
+            document.getElementById('signupSwitch').style.display = 'none';
+        });
+    </script>
+</body>
+</html>
