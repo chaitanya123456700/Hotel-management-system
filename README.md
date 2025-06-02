@@ -1,3 +1,7 @@
+NOTE: VIWE THE CODE OF THIS README RATHER THEN THE PREVIEW FOR UNDERSTANDING 
+
+
+
 create a folder called hotel management system or with your custom name 
 it should follow the below stucture change the paths of images if you created folders with the same name 
 your-project-folder/
